@@ -19,13 +19,20 @@ int main() {
     std::string names[] = {"configNatureTheme",  "configNordTheme",
                            "configAshesDark",    "configEightiesTheme",
                            "configMonokaiTheme", "configZenburnTheme",
-                           "configRedTheme"};
+                           "configRedTheme",     "config90s"};
 
-    std::string conf_path = "cp -f $HOME/.config/termite/dots/" +
-                            names[userin] + " $HOME/.config/termite/config";
+    int names_len = *(&names + 1) - names;
+    if (!(userin > 0 && userin <= names_len)) {
+        std::cout << "Option not found."
+                  << "\n";
+        return -1;
+    }
 
-    std::cout << conf_path << "\n";
-    system(conf_path.c_str());
+    std::string move_cmd = "cp -f $HOME/.config/termite/dots/" +
+                           names[userin - 1] + " $HOME/.config/termite/config";
+
+    std::cout << move_cmd << "\n";
+    system(move_cmd.c_str());
 
     return 0;
 }
